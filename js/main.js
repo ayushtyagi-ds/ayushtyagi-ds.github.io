@@ -8,6 +8,34 @@
 // ========================================
 
 document.addEventListener('DOMContentLoaded', function() {
+    // ========================================
+    // Typing Animation for Name
+    // ========================================
+    
+    const nameElement = document.querySelector('.hero-title .highlight');
+    if (nameElement) {
+        const fullName = 'Ayush Tyagi';
+        nameElement.textContent = '';
+        nameElement.style.borderRight = '3px solid var(--accent-primary)';
+        nameElement.style.paddingRight = '5px';
+        
+        let charIndex = 0;
+        
+        function typeWriter() {
+            if (charIndex < fullName.length) {
+                nameElement.textContent += fullName.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 100);
+            } else {
+                setTimeout(() => {
+                    nameElement.style.borderRight = 'none';
+                }, 500);
+            }
+        }
+        
+        setTimeout(typeWriter, 500);
+    }
+    
     // Mobile Navigation Toggle
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
@@ -125,31 +153,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // ========================================
-    // Skill Progress Bar Animation
-    // ========================================
-    
-    const skillProgressBars = document.querySelectorAll('.skill-progress-fill');
-    
-    if (skillProgressBars.length > 0) {
-        const progressObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const progressBar = entry.target;
-                    const targetWidth = progressBar.getAttribute('data-progress');
-                    setTimeout(() => {
-                        progressBar.style.width = targetWidth + '%';
-                    }, 200);
-                    progressObserver.unobserve(progressBar);
-                }
-            });
-        }, observerOptions);
-        
-        skillProgressBars.forEach(bar => {
-            bar.style.width = '0';
-            progressObserver.observe(bar);
-        });
-    }
-    
     // ========================================
     // Contact Form Validation
     // ========================================
@@ -355,4 +358,118 @@ function throttle(func, wait) {
             }, wait);
         }
     };
+}
+
+// ========================================
+// Contact Form Handler
+// ========================================
+
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const subject = document.getElementById('subject').value.trim();
+        const message = document.getElementById('message').value.trim();
+        const formStatus = document.getElementById('form-status');
+        
+        // Validation
+        let isValid = true;
+        const errors = {
+            name: '',
+            email: '',
+            subject: '',
+            message: ''
+        };
+        
+        if (!name) {
+            errors.name = 'Name is required';
+            isValid = false;
+        }
+        
+        if (!email) {
+            errors.email = 'Email is required';
+            isValid = false;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            errors.email = 'Please enter a valid email';
+            isValid = false;
+        }
+        
+        if (!subject) {
+            errors.subject = 'Subject is required';
+            isValid = false;
+        }
+        
+        if (!message) {
+            errors.message = 'Message is required';
+            isValid = false;
+        } else if (message.length < 10) {
+            errors.message = 'Message must be at least 10 characters';
+            isValid = false;
+        }
+        
+        // Display error messages
+        document.querySelectorAll('.error').forEach(el => el.style.display = 'none');
+        
+        Object.keys(errors).forEach(field => {
+            if (errors[field]) {
+                const errorEl = document.querySelector(`input[name="${field}"], textarea[name="${field}"]`).nextElementSibling;
+                if (errorEl) {
+                    errorEl.textContent = errors[field];
+                    errorEl.style.display = 'block';
+                }
+            }
+        });
+        
+        if (!isValid) return;
+        
+        // Show loading state
+        formStatus.style.display = 'block';
+        formStatus.style.backgroundColor = 'rgba(59, 130, 246, 0.1)';
+        formStatus.style.borderLeft = '4px solid #3b82f6';
+        formStatus.style.color = '#3b82f6';
+        formStatus.textContent = 'Sending your message...';
+        
+        try {
+            // Send email via Web3Forms
+            const formData = new FormData();
+            formData.append('access_key', 'ab3b8a38-b832-4b51-b378-15b3af5ee9c2');
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('subject', subject);
+            formData.append('message', message);
+            
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                formStatus.style.backgroundColor = 'rgba(34, 197, 94, 0.1)';
+                formStatus.style.borderLeft = '4px solid #22c55e';
+                formStatus.style.color = '#22c55e';
+                formStatus.textContent = '✓ Message sent successfully! I\'ll get back to you soon.';
+                
+                // Reset form
+                contactForm.reset();
+                document.querySelectorAll('.error').forEach(el => el.textContent = '');
+                
+                // Hide status message after 5 seconds
+                setTimeout(() => {
+                    formStatus.style.display = 'none';
+                }, 5000);
+            } else {
+                throw new Error(result.message || 'Form submission failed');
+            }
+        } catch (error) {
+            formStatus.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
+            formStatus.style.borderLeft = '4px solid #ef4444';
+            formStatus.style.color = '#ef4444';
+            formStatus.textContent = '✗ Error sending message. Please email me directly at ayushtyagi1337@gmail.com';
+        }
+    });
 }
