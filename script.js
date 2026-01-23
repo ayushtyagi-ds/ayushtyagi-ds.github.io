@@ -21,7 +21,20 @@ document.querySelectorAll('.nav-links a').forEach(link => {
 let lastScroll = 0;
 const navbar = document.querySelector('.navbar');
 
-window.addEventListener('scroll', () => {
+// Throttle function for performance
+function throttle(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+const handleScroll = throttle(() => {
     const currentScroll = window.pageYOffset;
     
     if (currentScroll <= 0) {
@@ -37,13 +50,15 @@ window.addEventListener('scroll', () => {
         navbar.classList.add('scroll-up');
     }
     lastScroll = currentScroll;
-});
+}, 100);
+
+window.addEventListener('scroll', handleScroll);
 
 // Active navigation link on scroll
 const sections = document.querySelectorAll('section');
 const navItems = document.querySelectorAll('.nav-links a');
 
-window.addEventListener('scroll', () => {
+const handleNavHighlight = throttle(() => {
     let current = '';
     
     sections.forEach(section => {
@@ -60,7 +75,9 @@ window.addEventListener('scroll', () => {
             item.classList.add('active');
         }
     });
-});
+}, 100);
+
+window.addEventListener('scroll', handleNavHighlight);
 
 // Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -119,19 +136,16 @@ if (heroSubtitle) {
 }
 
 // Add parallax effect to hero section
-window.addEventListener('scroll', () => {
+const hero = document.querySelector('.hero');
+
+const handleParallax = throttle(() => {
     const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
     if (hero) {
         hero.style.transform = `translateY(${scrolled * 0.5}px)`;
     }
-});
+}, 100);
 
-// Form validation (if contact form is added later)
-function validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-}
+window.addEventListener('scroll', handleParallax);
 
 // Console message
 console.log('%c👋 Welcome to my portfolio!', 'color: #3b82f6; font-size: 20px; font-weight: bold;');

@@ -465,7 +465,7 @@ body {
     .nav-links.active {
         transform: translateY(0);
         opacity: 1;
-        pointer-events: all;
+        pointer-events: auto;
     }
 
     .hero-title {
