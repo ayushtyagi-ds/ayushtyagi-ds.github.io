@@ -52,24 +52,25 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Navbar background change on scroll
+// Combined scroll handler for better performance
 const navbar = document.querySelector('.navbar');
+const sections = document.querySelectorAll('section');
+
 window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
+    const scrollY = window.scrollY;
+    
+    // Navbar background change on scroll
+    if (scrollY > 50) {
         navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
     } else {
         navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
     }
-});
-
-// Active navigation highlighting
-const sections = document.querySelectorAll('section');
-window.addEventListener('scroll', () => {
+    
+    // Active navigation highlighting
     let current = '';
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (window.scrollY >= (sectionTop - 100)) {
+        if (scrollY >= (sectionTop - 100)) {
             current = section.getAttribute('id');
         }
     });
@@ -80,6 +81,12 @@ window.addEventListener('scroll', () => {
             link.classList.add('active');
         }
     });
+    
+    // Parallax effect for hero section
+    const hero = document.querySelector('.hero');
+    if (hero && scrollY < hero.offsetHeight) {
+        hero.style.transform = `translateY(${scrollY * 0.5}px)`;
+    }
 });
 
 // Intersection Observer for animations
@@ -128,21 +135,7 @@ if (contactForm) {
     });
 }
 
-// Typing effect for hero subtitle (optional enhancement)
-function typeWriter(element, text, speed = 100) {
-    let i = 0;
-    element.textContent = '';
-    
-    function type() {
-        if (i < text.length) {
-            element.textContent += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        }
-    }
-    
-    type();
-}
+
 
 // Add scroll reveal animation for stats
 const stats = document.querySelectorAll('.stat h3');
@@ -174,27 +167,6 @@ const statsObserver = new IntersectionObserver((entries) => {
 
 stats.forEach(stat => {
     statsObserver.observe(stat);
-});
-
-// Parallax effect for hero section
-window.addEventListener('scroll', () => {
-    const scrolled = window.scrollY;
-    const hero = document.querySelector('.hero');
-    if (hero) {
-        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-    }
-});
-
-// Add hover effect for project cards
-const projectCards = document.querySelectorAll('.project-card');
-projectCards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-10px) scale(1.02)';
-    });
-    
-    card.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0) scale(1)';
-    });
 });
 
 // Initialize animations on page load
