@@ -13,18 +13,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // ========================================
 
     const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (!isTouchDevice) {
+    if (!isTouchDevice && !prefersReducedMotion) {
         const dot = document.createElement('div');
-        dot.className = 'cursor-dot';
+        dot.className = 'cursor-dot hidden';
         const ring = document.createElement('div');
-        ring.className = 'cursor-ring';
+        ring.className = 'cursor-ring hidden';
         document.body.appendChild(dot);
         document.body.appendChild(ring);
 
+        const RING_FOLLOW_SPEED = 0.12; // lower = more lag, higher = snappier follow
         let mouseX = 0, mouseY = 0;
         let ringX = 0, ringY = 0;
         let isVisible = false;
+        let animationStarted = false;
 
         document.addEventListener('mousemove', function(e) {
             mouseX = e.clientX;
@@ -34,6 +37,13 @@ document.addEventListener('DOMContentLoaded', function() {
             dot.style.top = mouseY + 'px';
 
             if (!isVisible) {
+                // Initialize ring to current position to avoid sliding from (0,0)
+                if (!animationStarted) {
+                    ringX = mouseX;
+                    ringY = mouseY;
+                    animationStarted = true;
+                    animateRing();
+                }
                 dot.classList.remove('hidden');
                 ring.classList.remove('hidden');
                 isVisible = true;
@@ -61,13 +71,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Smooth ring follow with requestAnimationFrame
         function animateRing() {
-            ringX += (mouseX - ringX) * 0.12;
-            ringY += (mouseY - ringY) * 0.12;
+            ringX += (mouseX - ringX) * RING_FOLLOW_SPEED;
+            ringY += (mouseY - ringY) * RING_FOLLOW_SPEED;
             ring.style.left = ringX + 'px';
             ring.style.top = ringY + 'px';
             requestAnimationFrame(animateRing);
         }
-        animateRing();
     }
 
     // ========================================
