@@ -49,6 +49,66 @@ body {
     color: var(--text-secondary);
     background-color: var(--primary-bg);
     overflow-x: hidden;
+    cursor: none;
+}
+
+/* ========================================
+   Custom Cursor
+   ======================================== */
+
+.cursor-dot,
+.cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+}
+
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent-primary);
+    box-shadow: 0 0 8px var(--accent-primary);
+}
+
+.cursor-ring {
+    width: 36px;
+    height: 36px;
+    border: 2px solid var(--accent-primary);
+    background: transparent;
+    transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease, opacity 0.3s ease;
+    opacity: 0.6;
+}
+
+.cursor-ring.hover {
+    width: 52px;
+    height: 52px;
+    border-color: var(--accent-secondary);
+    opacity: 1;
+}
+
+.cursor-dot.hidden,
+.cursor-ring.hidden {
+    opacity: 0;
+}
+
+/* Restore default cursor on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    body {
+        cursor: auto;
+    }
+    .cursor-dot,
+    .cursor-ring {
+        display: none;
+    }
+}
+
+a, button, [role="button"], input, textarea, select, label, .btn, .hamburger, .filter-btn {
+    cursor: none;
 }
 
 /* Container */
