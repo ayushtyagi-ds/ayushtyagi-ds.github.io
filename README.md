@@ -1,4 +1,4 @@
-# Ayush Tyagi - Data Scientist Portfolio
+# Ayush Tyagi - AI-Assisted Developer Portfolio
 
 A modern, professional multi-page portfolio website showcasing data science and engineering expertise.
 

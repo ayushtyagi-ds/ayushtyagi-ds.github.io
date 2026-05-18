@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore data science and machine learning projects by Ayush Tyagi including predictive analytics, NLP, and computer vision.">
-    <meta name="keywords" content="Projects, Machine Learning, Data Science, Portfolio, AI">
-    <title>Projects - Ayush Tyagi | Data Scientist</title>
+    <meta name="description" content="Explore practical projects by Ayush Tyagi spanning Databricks data engineering, AI-assisted internal tools, and analytics dashboards.">
+    <meta name="keywords" content="Projects, Databricks, Data Engineering, Internal Tools, Analytics, Portfolio, AI">
+    <title>Projects - Ayush Tyagi | AI-Assisted Developer</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
@@ -38,48 +38,62 @@
     <section class="section" style="padding-top: 150px;">
         <div class="container">
             <h1 class="section-title">My Projects</h1>
-            <p class="section-subtitle">Showcasing data science and engineering solutions</p>
+            <p class="section-subtitle">Showcasing practical data and internal tools solutions</p>
             
             <!-- Filter Buttons -->
             <div class="filter-buttons">
                 <button class="filter-btn active" data-filter="all">All Projects</button>
-                <button class="filter-btn" data-filter="machine-learning">Machine Learning</button>
+                <button class="filter-btn" data-filter="internal-tools">Internal Tools</button>
                 <button class="filter-btn" data-filter="data-engineering">Data Engineering</button>
                 <button class="filter-btn" data-filter="analytics">Analytics</button>
-                <button class="filter-btn" data-filter="visualization">Visualization</button>
             </div>
 
             <!-- Projects Grid -->
             <div class="projects-grid">
-                <!-- Project 1 - Featured Project -->
                 <div class="project-card" data-category="data-engineering">
                     <div class="project-image">
                         <i class="fas fa-layer-group"></i>
                     </div>
                     <div class="project-content">
-                        <h3>Alberta Affordability Data Platform — End-to-End ETL Pipeline</h3>
-                        <p>Comprehensive end-to-end ETL pipeline built on Databricks processing public datasets. Implements Medallion Architecture (Bronze-Silver-Gold layers) to transform raw data into analytics-ready datasets with actionable insights on housing affordability, employment trends, and cost-of-living metrics across Alberta.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Databricks</span>
-                            <span class="project-tag">Apache Spark</span>
-                            <span class="project-tag">Delta Lake</span>
-                            <span class="project-tag">Python</span>
-                            <span class="project-tag">SQL</span>
-                            <span class="project-tag">Azure Data Factory</span>
-                            <span class="project-tag">Medallion Architecture</span>
-                        </div>
-                        <ul style="font-size: 0.9rem; color: var(--text-muted); margin: 1rem 0; padding-left: 1.5rem;">
-                            <li>Built end-to-end data pipelines processing public datasets into cleansed layers</li>
-                            <li>Implemented Medallion Architecture ensuring data reliability and consistency</li>
-                            <li>Automated data extraction and integration workflows with Python and SQL</li>
-                            <li>Documented data models, metrics, and business rules for reusable reporting</li>
-                            <li>Performed comprehensive data cleansing and quality validation</li>
-                        </ul>
+                        <h3>Alberta Affordability Data Platform — End-to-End Data Engineering</h3>
+                        <p>End-to-end data engineering pipeline on Databricks using a Medallion architecture
+(Bronze → Silver → Gold) with PySpark and Delta Lake. Transforms public economic
+datasets — Statistics Canada wages, CPI, and unemployment, plus Alberta Open Data rent —
+into a custom Affordability Index, surfaced through a multi-page Databricks SQL dashboard.</p>
+                        <p><strong>Tech:</strong> Databricks · PySpark · Delta Lake · SQL · Python ·
+Databricks SQL Dashboards</p>
+                        <p><strong>AI-assisted build:</strong> developed with Claude, GitHub Copilot, and Cursor;
+all generated code reviewed and tested before use.</p>
                         <div class="project-links">
-                            <a href="https://github.com/ayushtyagi-ds/alberta_affordability_pipeline" class="project-link" target="_blank" rel="noopener noreferrer">
-                                <i class="fab fa-github"></i> GitHub
-                            </a>
+                            <a href="https://github.com/ayushtyagi-ds/alberta_affordability_pipeline" class="project-link" target="_blank" rel="noopener noreferrer">GitHub</a>
                         </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="internal-tools">
+                    <div class="project-image">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Startup TNT Investor Portal — AI-Assisted Internal Tool</h3>
+                        <p>Internal portal built with Lovable (AI app builder) and a Supabase backend,
+replacing manual spreadsheet tracking of investors and founders. Designed the
+role structure — Super Admin, GP Admin, LP, Founder — so each user sees only what
+they should. Directed the AI build, and maintain and debug the application.</p>
+                        <p><strong>Tech:</strong> Lovable · Supabase (PostgreSQL) · Figma</p>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="analytics">
+                    <div class="project-image">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Analytics Dashboard — Technology Alberta (Volunteer)</h3>
+                        <p>Internal analytics dashboard for Technology Alberta's leadership, turning
+engagement data that previously needed manual effort into consistent, automated
+reporting.</p>
+                        <p><strong>Tech:</strong> Looker Studio · SQL</p>
                     </div>
                 </div>
             </div>
@@ -101,7 +115,7 @@
                 </a>
             </div>
             <p>&copy; 2025 Ayush Tyagi. All rights reserved.</p>
-            <p>Built with passion for data science and innovation</p>
+            <p>Built with practical tools and AI-assisted development</p>
         </div>
     </footer>
 
